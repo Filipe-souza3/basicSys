@@ -1,0 +1,15 @@
+#spring.application.name=basicSys
+spring:
+  application:
+    name: basicSys
+  datasource:
+    url: jdbc:postgresql://localhost:5432/my_sys
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate.format_sql: true
