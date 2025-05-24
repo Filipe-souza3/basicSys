@@ -1,4 +1,4 @@
-#spring.application.name=basicSys
+#devtools.restart.enabled: tru
 spring:
   application:
     name: basicSys
@@ -13,3 +13,9 @@ spring:
       ddl-auto: none
     properties:
       hibernate.format_sql: true
+  devtools:
+    restart:
+      enabled: true
+  page:
+    page-size: 5
+
