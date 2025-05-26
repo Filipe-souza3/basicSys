@@ -20,13 +20,23 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<Page<Category>> getAllCategory(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String description,
+//    public ResponseEntity<Page<Category>> getAll(
+//            @RequestParam(required = false) String name,
+//            @RequestParam(required = false) String description,
+//            @RequestParam(defaultValue = "0") Integer page) {
+    public ResponseEntity<Page<Category>> getAll(
+            CategoryUpdateDTO dto,
             @RequestParam(defaultValue = "0") Integer page) {
 
-        Page<Category> categories = categoryService.getAllCategory(name, description, page);
+//        Page<Category> categories = categoryService.getAll(name, description, page);
+        Page<Category> categories = categoryService.getAll(dto.mapperToCategory(), page);
         return ResponseEntity.ok(categories);
+    }
+
+    @GetMapping("/{codigo}")
+    public ResponseEntity<Category> getById(@PathVariable(name = "codigo") Integer code){
+        Category category = this.categoryService.getById(code);
+        return ResponseEntity.ok(category);
     }
 
     @PostMapping
@@ -42,8 +52,7 @@ public class CategoryController {
             @Valid @RequestBody CategoryUpdateDTO dto,
             @PathVariable(name = "codigo") Integer code) {
 
-        Category category = dto.mapperToCategory();
-        category = this.categoryService.update(category, code);
+        Category category = this.categoryService.update(dto.mapperToCategory(), code);
         return ResponseEntity.ok(category);
     }
 

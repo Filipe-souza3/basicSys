@@ -2,15 +2,13 @@ package com.filipe.basicSys.service;
 
 import com.filipe.basicSys.model.Category;
 import com.filipe.basicSys.repository.CategoryRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.lang.reflect.Field;
 import java.util.Optional;
 
 @Service
@@ -21,14 +19,12 @@ public class CategoryService {
     private Integer pageSize;
     private final CategoryRepository categoryRepository;
 
-
-    public Page<Category> getAllCategory(String name, String description, Integer page) {
+    public Page<Category> getAll(Category category, Integer page) {
         if (page == null) {
             throw new IllegalArgumentException("Página esta vazia.");
         }
 
         Pageable pageable = PageRequest.of(page, pageSize);
-        Category category = this.checkParamsFindCategory(name, description);
         if (category == null) {
             return this.categoryRepository.findAll(pageable);
         }
@@ -38,6 +34,19 @@ public class CategoryService {
 
         return this.categoryRepository.findAll(example, pageable);
 
+    }
+
+    public Category getById(Integer code) {
+        if (code == null) {
+            throw new IllegalArgumentException("Código inválido.");
+        }
+
+        Optional<Category> category = this.categoryRepository.findById(code);
+        if (category.isEmpty()) {
+            throw new IllegalArgumentException("Não encontrado.");
+        }
+
+        return category.get();
     }
 
     public void save(Category category) {
@@ -58,33 +67,39 @@ public class CategoryService {
         return originalCategory;
     }
 
-    public void delete(Integer code){
+    public void delete(Integer code) {
+        if (code == null) {
+            throw new IllegalArgumentException("Código inválido.");
+        }
         this.categoryRepository.deleteById(code);
     }
 
     /// ////PRIVATE METHODS /////////////
 
-    private Category checkParamsFindCategory(String name, String description) {
-        Category category = new Category();
-        boolean check = false;
-        if (name != null) {
-            category.setName(name);
-            check = true;
-        }
-        if (description != null) {
-            category.setDescription(description);
-            check = true;
-        }
-        return check ? category : null;
-    }
+    private Category checkParamsUpdate(Category original, Category update)  {
+        Field[] fieldOriginal = original.getClass().getDeclaredFields();
+        Field[] fieldUpdate = update.getClass().getDeclaredFields();
 
-    private Category checkParamsUpdate(Category original, Category update){
-        if(update.getName() != null){
-            original.setName(update.getName());
+        for(Field FUpdate : fieldUpdate){
+            FUpdate.setAccessible(true);
+
+
+            try{
+                Object value = FUpdate.get(update);
+                if(value != null){
+                    for(Field FOriginal : fieldOriginal){
+                        FOriginal.setAccessible(true);
+
+                        if(FUpdate.getName().equals(FOriginal.getName())){
+                            FOriginal.set(original, value);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
-        if(update.getDescription() != null){
-            original.setDescription(update.getDescription());
-        }
+
         return original;
     }
 }
