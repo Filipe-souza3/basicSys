@@ -38,8 +38,7 @@ public class CategoryController {
     public ResponseEntity<Category> save(@Valid @RequestBody CategoryDTO dto) {
 
         Category category = dto.mapperToCategory();
-        this.categoryService.save(category);
-        return ResponseEntity.ok(category);
+        return ResponseEntity.ok(this.categoryService.save(category));
     }
 
     @PatchMapping("/{codigo}")

@@ -35,10 +35,7 @@ public class SupplierController {
 
     @PostMapping
     public ResponseEntity<Supplier> save(@Valid @RequestBody SupplierDTO dto) {
-
-        Supplier supplier = dto.mapperToCategory();
-        this.supplierService.save(supplier);
-        return ResponseEntity.ok(supplier);
+        return ResponseEntity.ok(this.supplierService.save(dto.mapperToCategory()));
     }
 
     @PatchMapping("/{codigo}")

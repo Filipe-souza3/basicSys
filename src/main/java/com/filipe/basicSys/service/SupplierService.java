@@ -21,9 +21,6 @@ public class SupplierService {
 
     public Page<Supplier> getAll(Supplier supplier, Integer page) {
 
-        if (page == null) {
-            throw new IllegalArgumentException("A page esta vazia.");
-        }
         Pageable pageable = PageRequest.of(page, this.pageSize);
         if (supplier == null) {
             return this.supplierRepository.findAll(pageable);
@@ -45,11 +42,11 @@ public class SupplierService {
         return supplier.get();
     }
 
-    public void save(Supplier supplier) {
+    public Supplier save(Supplier supplier) {
         if (supplier == null) {
             throw new IllegalArgumentException("Fornecedor esta nulo.");
         }
-        this.supplierRepository.save(supplier);
+        return this.supplierRepository.save(supplier);
     }
 
     @Transactional

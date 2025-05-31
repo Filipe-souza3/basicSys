@@ -67,9 +67,8 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> save(@Valid @RequestBody ProductDTO dto) {
-        this.productService.save(dto.mapperToProduct());
-        return ResponseEntity.ok(dto);
+    public ResponseEntity<Product> save(@Valid @RequestBody ProductDTO dto) {
+        return ResponseEntity.ok(this.productService.save(dto.mapperToProduct()));
     }
 
     @PatchMapping("/{codigo}")

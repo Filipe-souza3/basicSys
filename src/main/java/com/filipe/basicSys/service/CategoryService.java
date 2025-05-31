@@ -20,9 +20,6 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     public Page<Category> getAll(Category category, Integer page) {
-        if (page == null) {
-            throw new IllegalArgumentException("A page esta vazia.");
-        }
 
         Pageable pageable = PageRequest.of(page, this.pageSize);
         if (category == null) {
@@ -49,17 +46,17 @@ public class CategoryService {
         return category.get();
     }
 
-    public void save(Category category) {
+    public Category save(Category category) {
         if (category == null) {
             throw new IllegalArgumentException("Categoria está nula.");
         }
-        this.categoryRepository.save(category);
+        return this.categoryRepository.save(category);
     }
 
     @Transactional
     public Category update(Category category, Integer code) {
-        if (category == null) {
-            throw new IllegalArgumentException("Categoria esta nula.");
+        if (code == null) {
+            throw new IllegalArgumentException("Código inválido.");
         }
         Category originalCategory = this.categoryRepository.findById(code).orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada."));
         this.categoryRepository.save(this.checkParamsUpdate(originalCategory, category));

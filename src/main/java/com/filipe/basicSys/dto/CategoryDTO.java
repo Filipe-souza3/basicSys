@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 public record CategoryDTO(
         @Size(min = 3, max = 255, message = "O campo deve conter tamanho minimo de 3 e no máximo 255.")
-        @NotBlank(message = "O campo nome esta vazio")
+        @NotBlank(message = "O campo name esta vazio")
         String name,
 
         @Size(min = 3, max = 255, message = "O campo deve conter tamanho minimo de 3 e no máximo 255.")

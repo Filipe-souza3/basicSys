@@ -1,19 +1,13 @@
 package com.filipe.basicSys.service;
 
-import com.filipe.basicSys.dto.ProductDTO;
 import com.filipe.basicSys.model.Product;
 import com.filipe.basicSys.repository.ProductRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,10 +21,6 @@ public class ProductService {
 
     public Page<Product> getAll(Product product, Integer page) {
 
-        if (page == null) {
-            throw new IllegalArgumentException("A page esta vazia.");
-        }
-
         Pageable pageable = PageRequest.of(page, this.pageSize);
         if (product == null) {
             return this.productRepository.findAll(pageable);
@@ -41,11 +31,11 @@ public class ProductService {
         return this.productRepository.findAll(example, pageable);
     }
 
-    public void save(Product product) {
+    public Product save(Product product) {
         if (product == null) {
             throw new IllegalArgumentException("Produto é inválido.");
         }
-        this.productRepository.save(product);
+        return this.productRepository.save(product);
     }
 
     public Product update(Product product, Integer code) {
