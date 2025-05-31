@@ -13,4 +13,13 @@ CREATE TABLE suppliers (
     postalcode character varying(20),
     country character varying(50),
     phone character varying(50)
+);
+
+CREATE TABLE products (
+    id serial primary key,
+    name character varying(255),
+    supplierid integer not null references suppliers(id),
+    categoryid integer not null references categories(id),
+    unit character varying(255),
+    price numeric(10,2)
 )

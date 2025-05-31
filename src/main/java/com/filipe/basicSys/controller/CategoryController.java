@@ -20,15 +20,10 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-//    public ResponseEntity<Page<Category>> getAll(
-//            @RequestParam(required = false) String name,
-//            @RequestParam(required = false) String description,
-//            @RequestParam(defaultValue = "0") Integer page) {
     public ResponseEntity<Page<Category>> getAll(
             CategoryUpdateDTO dto,
             @RequestParam(defaultValue = "0") Integer page) {
 
-//        Page<Category> categories = categoryService.getAll(name, description, page);
         Page<Category> categories = categoryService.getAll(dto.mapperToCategory(), page);
         return ResponseEntity.ok(categories);
     }

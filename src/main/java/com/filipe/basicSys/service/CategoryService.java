@@ -21,10 +21,10 @@ public class CategoryService {
 
     public Page<Category> getAll(Category category, Integer page) {
         if (page == null) {
-            throw new IllegalArgumentException("Página esta vazia.");
+            throw new IllegalArgumentException("A page esta vazia.");
         }
 
-        Pageable pageable = PageRequest.of(page, pageSize);
+        Pageable pageable = PageRequest.of(page, this.pageSize);
         if (category == null) {
             return this.categoryRepository.findAll(pageable);
         }
@@ -83,7 +83,6 @@ public class CategoryService {
         for(Field FUpdate : fieldUpdate){
             FUpdate.setAccessible(true);
 
-
             try{
                 Object value = FUpdate.get(update);
                 if(value != null){
@@ -99,7 +98,6 @@ public class CategoryService {
                 throw new RuntimeException(e);
             }
         }
-
         return original;
     }
 }

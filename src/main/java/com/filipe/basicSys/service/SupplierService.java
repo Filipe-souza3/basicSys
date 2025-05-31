@@ -22,7 +22,7 @@ public class SupplierService {
     public Page<Supplier> getAll(Supplier supplier, Integer page) {
 
         if (page == null) {
-            throw new IllegalArgumentException("A página esta vazia.");
+            throw new IllegalArgumentException("A page esta vazia.");
         }
         Pageable pageable = PageRequest.of(page, this.pageSize);
         if (supplier == null) {
