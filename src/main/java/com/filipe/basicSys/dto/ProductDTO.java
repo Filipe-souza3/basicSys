@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 
 public record ProductDTO(
-        @NotBlank(message = "O campo nome esta vazio.")
+        @NotBlank(message = "O campo name esta vazio.")
         @Size(min = 3, max = 255, message = "O campo deve conter tamanho minimo de 3 e no máximo 255.")
         String name,
 

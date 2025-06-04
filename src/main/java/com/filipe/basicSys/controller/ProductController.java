@@ -73,7 +73,7 @@ public class ProductController {
 
     @PatchMapping("/{codigo}")
     public ResponseEntity<ProductBasicDTO> update(
-            ProductUpdateDTO dto,
+            @Valid @RequestBody ProductUpdateDTO dto,
             @PathVariable(name = "codigo") Integer code) {
         Product product = this.productService.update(dto.mapperToProduct(), code);
         return ResponseEntity.ok(new ProductBasicDTO(

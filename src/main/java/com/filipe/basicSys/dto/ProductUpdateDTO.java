@@ -3,9 +3,7 @@ package com.filipe.basicSys.dto;
 import com.filipe.basicSys.model.Category;
 import com.filipe.basicSys.model.Product;
 import com.filipe.basicSys.model.Supplier;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
@@ -19,7 +17,8 @@ public record ProductUpdateDTO(
         @Size(min = 3, max = 255, message = "O campo deve conter tamanho minimo de 3 e no máximo 255.")
         String unit,
 
-        @NotNull(message = "O campo price esta vazio.")
+        @DecimalMin(value = "0.01", message = "O preço deve ser maior que zero")
+        @Digits(integer = 10, fraction = 2, message = "O preço deve ter no máximo 10 dígitos inteiros e 2 decimais")
         BigDecimal price
 ) {
 
