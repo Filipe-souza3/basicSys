@@ -58,7 +58,7 @@ public class ShipperService {
         }
 
         Shipper original = this.shipperRepository.findById(code).orElseThrow(() -> new IllegalArgumentException("Entregador não encontrado"));
-        return this.checkParamsUpdate(original, update);
+        return this.shipperRepository.save(this.checkParamsUpdate(original, update));
     }
 
     public void delete(Integer code){

@@ -36,4 +36,26 @@ public class Product {
     @Column(name = "price", precision = 12, scale = 2)
     private BigDecimal price;
 
+    public Product ProductComplete(Product p) {
+        return new Product(
+                p.getId(),
+                p.getName(),
+                new Supplier(
+                        p.getSupplier().getId(),
+                        p.getSupplier().getName(),
+                        p.getSupplier().getContactName(),
+                        p.getSupplier().getAddress(),
+                        p.getSupplier().getCity(),
+                        p.getSupplier().getPostalCode(),
+                        p.getSupplier().getCountry(),
+                        p.getSupplier().getPhone()
+                ),
+                new Category(
+                        p.getCategory().getId(),
+                        p.getCategory().getName(),
+                        p.getCategory().getDescription()
+                ),
+                p.getUnit(),
+                p.getPrice());
+    }
 }

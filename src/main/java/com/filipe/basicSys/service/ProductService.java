@@ -1,11 +1,14 @@
 package com.filipe.basicSys.service;
 
+import com.filipe.basicSys.model.Category;
 import com.filipe.basicSys.model.Product;
+import com.filipe.basicSys.model.Supplier;
 import com.filipe.basicSys.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
 
@@ -31,6 +34,15 @@ public class ProductService {
         return this.productRepository.findAll(example, pageable);
     }
 
+    public Product getById(Integer code){
+        if(code == null){
+            throw new IllegalArgumentException("O código é nulo.");
+        }
+        Product product = this.productRepository.findById(code).orElseThrow(()-> new IllegalArgumentException("Produto não encontrado."));
+
+        return new Product().ProductComplete(product);
+    }
+
     public Product save(Product product) {
         if (product == null) {
             throw new IllegalArgumentException("Produto é inválido.");
@@ -38,6 +50,7 @@ public class ProductService {
         return this.productRepository.save(product);
     }
 
+    @Transactional
     public Product update(Product product, Integer code) {
         if (code == null) {
             throw new IllegalArgumentException("Código inválido.");

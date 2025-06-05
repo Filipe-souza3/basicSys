@@ -57,7 +57,7 @@ public class CustomerService {
             throw new IllegalArgumentException("Código esta nulo.");
         }
         Customer original = this.customerRepository.findById(code).orElseThrow(()->new IllegalArgumentException("Cliente não encontrado."));
-        return this.checkParamsUpdate(original, customer);
+        return this.customerRepository.save(this.checkParamsUpdate(original, customer));
     }
 
     public void delete(Integer code){

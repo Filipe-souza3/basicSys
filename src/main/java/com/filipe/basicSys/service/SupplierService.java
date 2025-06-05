@@ -56,8 +56,8 @@ public class SupplierService {
         }
 
         Supplier supplierOriginal = this.supplierRepository.findById(code).orElseThrow(() -> new IllegalArgumentException("Fornecedor não encontrado."));
-        this.supplierRepository.save(this.checkParamsUpdate(supplierOriginal, supplier));
-        return supplierOriginal;
+        return this.supplierRepository.save(this.checkParamsUpdate(supplierOriginal, supplier));
+
     }
 
     public void delete(Integer code) {

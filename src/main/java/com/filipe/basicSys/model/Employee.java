@@ -22,7 +22,7 @@ public class Employee {
     private String lastName;
     @Column(name = "firstname", length = 255)
     private String firstName;
-    @Column(name = "birthday")
+    @Column(name = "birthdate")
     private LocalDate birthday;
     @Column(name = "photo", length = 255)
     private String photo;

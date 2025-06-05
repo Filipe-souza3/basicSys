@@ -28,26 +28,7 @@ public class ProductController {
 
             Page<Product> products = this.productService.getAll(dto.mapperToProduct(), page);
             Page<Product> list = products.map(p ->
-                    new Product(
-                            p.getId(),
-                            p.getName(),
-                            new Supplier(
-                                    p.getSupplier().getId(),
-                                    p.getSupplier().getName(),
-                                    p.getSupplier().getContactName(),
-                                    p.getSupplier().getAddress(),
-                                    p.getSupplier().getCity(),
-                                    p.getSupplier().getPostalCode(),
-                                    p.getSupplier().getCountry(),
-                                    p.getSupplier().getPhone()
-                            ),
-                            new Category(
-                                    p.getCategory().getId(),
-                                    p.getCategory().getName(),
-                                    p.getCategory().getDescription()
-                            ),
-                            p.getUnit(),
-                            p.getPrice()));
+                    new Product().ProductComplete(p));
             return ResponseEntity.ok(list);
     }
 
@@ -64,6 +45,11 @@ public class ProductController {
                         p.getPrice()
                 ));
         return ResponseEntity.ok(basicProducts);
+    }
+
+    @GetMapping("/{codigo}")
+    public ResponseEntity<Product> getById(@PathVariable(name = "codigo") Integer code){
+        return ResponseEntity.ok(this.productService.getById(code));
     }
 
     @PostMapping

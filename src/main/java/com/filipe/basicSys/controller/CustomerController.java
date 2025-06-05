@@ -18,7 +18,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping
-    public ResponseEntity<Page<Customer>> getAll(CustomerUpdateDTO dto, @RequestParam(defaultValue = "0") Integer page) {
+    public ResponseEntity<Page<Customer>> getAll(@Valid CustomerUpdateDTO dto, @RequestParam(defaultValue = "0") Integer page) {
         Page<Customer> customers = this.customerService.getAll(dto.mapperToCustomer(), page);
         return ResponseEntity.ok(customers);
     }

@@ -59,9 +59,7 @@ public class CategoryService {
             throw new IllegalArgumentException("Código inválido.");
         }
         Category originalCategory = this.categoryRepository.findById(code).orElseThrow(() -> new IllegalArgumentException("Categoria não encontrada."));
-        this.categoryRepository.save(this.checkParamsUpdate(originalCategory, category));
-
-        return originalCategory;
+        return this.categoryRepository.save(this.checkParamsUpdate(originalCategory, category));
     }
 
     public void delete(Integer code) {

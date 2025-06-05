@@ -1,6 +1,7 @@
 package com.filipe.basicSys.dto;
 
 import com.filipe.basicSys.model.Category;
+import com.filipe.basicSys.model.Product;
 import com.filipe.basicSys.model.Supplier;
 
 import java.math.BigDecimal;
@@ -13,4 +14,5 @@ public record ProductBasicDTO(
         String unit,
         BigDecimal price
 ) {
+    
 }
