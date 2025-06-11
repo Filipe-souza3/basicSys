@@ -68,6 +68,10 @@ public class CustomerService {
         this.customerRepository.deleteById(code);
     }
 
+    public Customer getReferenceById(Integer code){
+        return this.customerRepository.getReferenceById(code);
+    }
+
     /// //PRIVATE METHODS
     private Customer checkParamsUpdate(Customer original, Customer update)  {
         Field[] fieldOriginal = original.getClass().getDeclaredFields();

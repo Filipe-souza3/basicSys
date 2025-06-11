@@ -3,9 +3,7 @@ package com.filipe.basicSys.controller;
 import com.filipe.basicSys.dto.ProductBasicDTO;
 import com.filipe.basicSys.dto.ProductDTO;
 import com.filipe.basicSys.dto.ProductUpdateDTO;
-import com.filipe.basicSys.model.Category;
 import com.filipe.basicSys.model.Product;
-import com.filipe.basicSys.model.Supplier;
 import com.filipe.basicSys.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -23,27 +21,20 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<Page<Product>> getAll(
-            ProductUpdateDTO dto,
+            @Valid ProductUpdateDTO dto,
             @RequestParam(defaultValue = "0") Integer page) {
 
             Page<Product> products = this.productService.getAll(dto.mapperToProduct(), page);
-            Page<Product> list = products.map(p ->
-                    new Product().ProductComplete(p));
-            return ResponseEntity.ok(list);
+            Page<Product> productsComplete = products.map(Product::productComplete);
+            return ResponseEntity.ok(productsComplete);
     }
 
     @GetMapping("/basic")
-    public ResponseEntity<Page<ProductBasicDTO>> getAllBasic(ProductUpdateDTO dto, Integer page) {
+    public ResponseEntity<Page<ProductBasicDTO>> getAllBasic(
+            @Valid ProductUpdateDTO dto,
+            @RequestParam(defaultValue = "0") Integer page) {
         Page<Product> products = this.productService.getAll(dto.mapperToProduct(), page);
-        Page<ProductBasicDTO> basicProducts = products.map((p) ->
-                new ProductBasicDTO(
-                        p.getId(),
-                        p.getName(),
-                        p.getSupplier().getId(),
-                        p.getCategory().getId(),
-                        p.getUnit(),
-                        p.getPrice()
-                ));
+        Page<ProductBasicDTO> basicProducts = products.map(Product::productToProductBasicDTO);
         return ResponseEntity.ok(basicProducts);
     }
 

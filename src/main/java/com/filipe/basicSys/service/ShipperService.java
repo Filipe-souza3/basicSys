@@ -68,6 +68,10 @@ public class ShipperService {
         this.shipperRepository.deleteById(code);
     }
 
+    public Shipper getReferenceById(Integer code){
+        return this.shipperRepository.getReferenceById(code);
+    }
+
     /// //PRIVATE METHODS
     private Shipper checkParamsUpdate(Shipper original, Shipper update) {
         Field[] fieldOriginal = original.getClass().getDeclaredFields();

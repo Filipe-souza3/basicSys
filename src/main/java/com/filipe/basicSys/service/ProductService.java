@@ -1,8 +1,6 @@
 package com.filipe.basicSys.service;
 
-import com.filipe.basicSys.model.Category;
 import com.filipe.basicSys.model.Product;
-import com.filipe.basicSys.model.Supplier;
 import com.filipe.basicSys.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,14 +38,15 @@ public class ProductService {
         }
         Product product = this.productRepository.findById(code).orElseThrow(()-> new IllegalArgumentException("Produto não encontrado."));
 
-        return new Product().ProductComplete(product);
+        return new Product().productComplete(product);
     }
 
     public Product save(Product product) {
         if (product == null) {
             throw new IllegalArgumentException("Produto é inválido.");
         }
-        return this.productRepository.save(product);
+        Product newProduct = this.productRepository.save(product);
+        return this.productRepository.findByIdWithRelations(newProduct.getId());
     }
 
     @Transactional

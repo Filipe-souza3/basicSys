@@ -22,14 +22,14 @@ public class EmployeeController {
         return ResponseEntity.ok(this.employeeService.getAll(dto.mapperToEmployee(), page));
     }
 
-    @PostMapping
-    public ResponseEntity<Employee> save(@Valid @RequestBody EmployeeDTO dto){
-        return ResponseEntity.ok(this.employeeService.save(dto.mapperToEmployee()));
-    }
-
     @GetMapping("/{codigo}")
     public ResponseEntity<Employee> getById(@PathVariable(name = "codigo") Integer code){
         return ResponseEntity.ok(this.employeeService.getById(code));
+    }
+
+    @PostMapping
+    public ResponseEntity<Employee> save(@Valid @RequestBody EmployeeDTO dto){
+        return ResponseEntity.ok(this.employeeService.save(dto.mapperToEmployee()));
     }
 
     @PatchMapping("/{codigo}")

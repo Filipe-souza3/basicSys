@@ -61,6 +61,10 @@ public class EmployeeService {
         this.employeeRepository.deleteById(code);
     }
 
+    public Employee getReferenceById(Integer code){
+        return this.employeeRepository.getReferenceById(code);
+    }
+
     /// //PRIVATE METHODS
     private Employee checkParamsUpdate(Employee original, Employee update) {
         Field[] fieldOriginal = original.getClass().getDeclaredFields();

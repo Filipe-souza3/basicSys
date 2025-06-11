@@ -48,3 +48,18 @@ CREATE TABLE shippers (
     name character varying(255),
     phone character varying(50)
 );
+
+CREATE TABLE orders (
+    id serial primary key,
+    customerid integer not null references customers(id),
+    employeeid integer not null references employees(id),
+    date date DEFAULT CURRENT_DATE,
+    shipperid integer not null references shippers(id)
+);
+
+CREATE TABLE orderdetails (
+    id serial primary key,
+    orderid integer not null references orders(id),
+    productid integer not null references products(id),
+    quantity integer not null
+);

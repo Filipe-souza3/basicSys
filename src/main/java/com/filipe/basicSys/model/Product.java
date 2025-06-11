@@ -1,5 +1,6 @@
 package com.filipe.basicSys.model;
 
+import com.filipe.basicSys.dto.ProductBasicDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,7 +37,7 @@ public class Product {
     @Column(name = "price", precision = 12, scale = 2)
     private BigDecimal price;
 
-    public Product ProductComplete(Product p) {
+    public static Product productComplete(Product p) {
         return new Product(
                 p.getId(),
                 p.getName(),
@@ -57,5 +58,16 @@ public class Product {
                 ),
                 p.getUnit(),
                 p.getPrice());
+    }
+
+    public static ProductBasicDTO productToProductBasicDTO(Product p){
+        return new ProductBasicDTO(
+                p.getId(),
+                p.getName(),
+                p.getSupplier().getId(),
+                p.getCategory().getId(),
+                p.getUnit(),
+                p.getPrice()
+        );
     }
 }
