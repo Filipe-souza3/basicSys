@@ -67,6 +67,10 @@ public class ProductService {
         this.productRepository.deleteById(code);
     }
 
+    public Product getReferenceById(Integer code){
+        return this.productRepository.getReferenceById(code);
+    }
+
     /// /////////PRIVATE METHODS
 
     private Product checkParamsUpdate(Product original, Product update) {

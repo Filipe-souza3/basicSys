@@ -90,6 +90,10 @@ public class OrderService {
         this.orderRepository.deleteById(code);
     }
 
+    public Order getReferenceById(Integer code){
+        return this.orderRepository.getReferenceById(code);
+    }
+
 
     /// PRIVATEE METHODS
 
